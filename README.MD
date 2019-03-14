@@ -16,3 +16,49 @@ This course includes:
 - building a service package
 - intermediate service templates
 - All with Enterprise relevant examples (QoS, ACLs, NTP servers, etc).
+
+Template tag operations
+Templates allow for defining different behaviour when applying the template. This is accomplished by setting tags, as an attribute. Existing tags are: merge, replace, delete, create or nocreate on relevant nodes in the template. A tag in inherited to its sub-nodes until a new tag is introduced.
+
+merge: Merge with a node if it exists, otherwise create the node. This is the default operation if no operation is explicitly set.
+
+...
+<config tags="merge">
+  <interface xmlns="urn:ios">
+...
+ 
+
+replace: Replace a node if it exists, otherwise create the node.
+
+...
+<GigabitEthernet tags="replace">
+  <name>{link/interface-number}</name>
+  <description tags="merge">Link to PE</description>
+...
+ 
+
+create: Creates a node. The node can not already exist. An error is raised if the node exists.
+
+...
+<GigabitEthernet tags="create">
+  <name>{link/interface-number}</name>
+  <description tags="merge">Link to PE</description>
+...
+ 
+
+nocreate: Merge with a node if it exists. If it does not exist, it will not be created.
+
+...
+<GigabitEthernet tags="nocreate">
+  <name>{link/interface-number}</name>
+  <description tags="merge">Link to PE</description>
+...
+ 
+
+delete: Delete the node.
+
+...
+<GigabitEthernet tags="delete">
+  <name>{link/interface-number}</name>
+  <description tags="merge">Link to PE</description>
+...
